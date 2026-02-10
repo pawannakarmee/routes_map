@@ -1,3 +1,5 @@
+      import "./styles.css";
+      
       function convertDMSToDecimal(dmsStr) {
         const match = dmsStr.match(
           /^(\d{2,3})(\d{2})(\d{2}(?:\.\d+)?)([NSWE])$/,
