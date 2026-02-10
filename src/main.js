@@ -4930,9 +4930,9 @@
         });
       });
 
-      /*
+      
             const airwayBtn = document.getElementById("airwayLabelBtn");
-
+/*
            airwayBtn.addEventListener("click", () => {
               airwayLabelsVisible = !airwayLabelsVisible;
 
