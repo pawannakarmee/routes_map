@@ -1,0 +1,265 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Route Display</title>
+
+    <!-- Local Leaflet CSS for offline compatibility -->
+    <link rel="stylesheet" href="leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet/dist/leaflet.css"
+      onerror="this.remove()"
+    />
+
+    <!-- Google font (optional) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <script src="leaflet.js"></script>
+    <script>
+      // If local leaflet.js is missing or failed, load CDN
+      if (typeof window.L === "undefined") {
+        const s = document.createElement("script");
+        s.src = "https://unpkg.com/leaflet/dist/leaflet.js";
+        document.head.appendChild(s);
+      }
+    </script>
+
+    <script>
+      document.addEventListener(
+        "touchstart",
+        function (event) {
+          if (event.touches.length > 1) {
+            event.preventDefault(); // allow pinch zoom
+          }
+        },
+        { passive: false },
+      );
+
+      let lastTouchEnd = 0;
+      document.addEventListener(
+        "touchend",
+        function (event) {
+          let now = new Date().getTime();
+          if (now - lastTouchEnd <= 350) {
+            event.preventDefault(); // block double-tap zoom
+          }
+          lastTouchEnd = now;
+        },
+        { passive: false },
+      );
+    </script>
+
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <!-- Menu bar for buttons -->
+    <div id="map">
+      <div id="crosshair"></div>
+    </div>
+
+    <div id="mapMenuBar" class="map-menu-bar">
+      <button id="toggleMapBtn" class="map-btn">Toggle Map</button>
+      <button id="resetViewBtn" class="map-btn">RTE Clear</button>
+      <button id="toggleRouteTipsBtn" class="map-btn">RTE Info</button>
+      <div id="mapLayerPanel" class="map-btn-panel">
+        <button id="toggleMapLayerBtn" class="map-btn">Map Layers ▸</button>
+        <div id="mapLayerCheckboxes" class="areas-checkboxes">
+          <label><input type="checkbox" id="mlAwyLabels" /> AWYLabels</label>
+          <label><input type="checkbox" id="mlFixes" checked /> Fixes</label>
+          <label><input type="checkbox" id="mlRunways" checked /> RWYs</label>
+          <label><input type="checkbox" id="mlBorders" /> Borders</label>
+          <label
+            ><input type="checkbox" id="mlAirspace" checked /> Airspace</label
+          >
+        </div>
+      </div>
+
+      <div id="areasPanel" class="map-btn-panel">
+        <button id="toggleAreasBtn" class="map-btn">Areas ▸</button>
+        <div id="areasCheckboxes" class="areas-checkboxes">
+          <label
+            ><input type="checkbox" id="toggleRestricted" /> Restricted</label
+          >
+          <label
+            ><input type="checkbox" id="toggleProhibitated" />
+            Prohibitated</label
+          >
+          <label><input type="checkbox" id="toggleDanger" /> Danger</label>
+          <label><input type="checkbox" id="toggleTraining" /> Training</label>
+          <label><input type="checkbox" id="toggleCTA" /> CTA</label>
+          <label><input type="checkbox" id="toggleDetails" /> Info</label>
+          <button id="clearAreasBtn" class="map-btn">Clear</button>
+        </div>
+      </div>
+      <button id="showHoldingsBtn" class="map-btn">HLD pts</button>
+      <button id="toggleFreqBtn" class="map-btn">FREQ</button>
+
+      <div id="sid12_Panel" class="map-btn-panel">
+        <button id="toggleSidBtn" class="map-btn">SIDs ▸</button>
+        <div id="sid12Checkboxes" class="areas-checkboxes">
+          <label><input type="checkbox" id="rwyOMAA13" /> AA_13</label>
+          <label><input type="checkbox" id="rwyOMAA31" /> AA_31</label>
+          <label><input type="checkbox" id="rwyOMAD13" /> AD_13</label>
+          <label><input type="checkbox" id="rwyOMDB12" /> DB_12</label>
+          <label><input type="checkbox" id="rwyOMSJ12" /> SJ_12</label>
+        </div>
+      </div>
+      <!--<button id="showSidBtn" class="map-btn">SIDs ▸</button>-->
+
+      <div id="toolBar" class="tool-bar">
+        <!--<button id="toolsBtn" class ="tool-btn">Tools</button>-->
+        <button id="rblToolBtn" class="tool-btn">RBL</button>
+        <button id="clearRblBtn" class="tool-btn">Clear RBLs</button>
+        <button id="measureBtn" class="tool-btn">Scale</button>
+        <button id="clearMeasuresBtn" class="tool-btn">Clear Scale</button>
+        <button id="penBtn" class="tool-btn">Pen</button>
+        <button id="clearPenBtn" class="tool-btn">Clear Pen</button>
+        <button id="textToolBtn" class="tool-btn">Text Box</button>
+        <button id="clearTextBtn" class="tool-btn">Clear Boxes</button>
+      </div>
+
+      <div id="sectorPanel" class="map-btn-panel">
+        <div class="sector-info-group">
+          <button id="toggleTableBtn" class="map-btn">Sector Info ▸</button>
+          <div class="sector-btn-wrapper">
+            <button id="sectorHeader" class="map-btn">Sectors ▸</button>
+            <div id="sectorOptions" class="sector-checkboxes">
+              <label
+                ><input type="checkbox" id="selectHighSectors" /> High</label
+              >
+              <label><input type="checkbox" id="selectLowSectors" /> Low</label>
+              <hr style="margin: 6px 0; border-color: #0a3a40" />
+              <label><input type="checkbox" value="S" /> ACCS</label>
+              <label><input type="checkbox" value="L" /> ACCL</label>
+              <label><input type="checkbox" value="B" /> ACCB</label>
+              <label><input type="checkbox" value="G" /> ACCG</label>
+              <label><input type="checkbox" value="A" /> ACCA</label>
+              <label><input type="checkbox" value="N" /> ACCN</label>
+              <label><input type="checkbox" value="M" /> ACCM</label>
+              <label><input type="checkbox" value="W" /> ACCW</label>
+              <label><input type="checkbox" value="C" /> ACCC</label>
+              <label><input type="checkbox" value="D" /> ACCD</label>
+              <label><input type="checkbox" value="H" /> ACCH</label>
+              <label><input type="checkbox" value="E" /> ACCE</label>
+              <label><input type="checkbox" value="Y" /> ACCY</label>
+              <label><input type="checkbox" value="R" /> ACCR</label>
+              <hr style="margin: 6px 0; border-color: gray" />
+              <label>
+                <input type="checkbox" id="showSectorColors" /> Show
+              </label>
+            </div>
+          </div>
+          <button id="toolMenu" class="map-btn">Tools</button>
+        </div>
+      </div>
+    </div>
+
+    <button
+      id="toggleRoutePanelBtn"
+      type="button"
+      class="rp-toggle"
+      aria-label="Toggle Route Panel"
+    >
+      <span class="rp-arrow"></span>
+    </button>
+
+    <!--route filter buttons -->
+    <div id="routePanel">
+      <div id="routeFilters">
+        <button onclick="filterRoutes('Arr')" class="filter-btn selected">
+          Arr
+        </button>
+        <button onclick="filterRoutes('Dep')" class="filter-btn">Dep</button>
+        <button onclick="filterRoutes('Ovf')" class="filter-btn">Ovf</button>
+        <button onclick="filterRoutes('FRA')" class="filter-btn">FRA</button>
+      </div>
+      <div id="routeList"></div>
+    </div>
+
+    <div id="tooltipContainer" class="tooltip-container">
+      <div id="sectorTooltip" class="tooltip">Sectors:</div>
+      <div id="routeTooltip" class="tooltip">Route:</div>
+      <div id="expandedRouteTooltip" class="tooltip">Waypoints:</div>
+      <div id="remarksOverlay" class="tooltip">Remarks:</div>
+    </div>
+
+    <div id="areaDetailsPanel" class="area-details-panel">
+      <strong id="areaName">Area</strong>
+      <span id="areaLimit"></span>
+      <span id="areaType"></span>
+    </div>
+
+    <!-- ----Floating Table for sector info------------->
+    <div
+      id="sectorTablePanel"
+      style="
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 11px;
+        font-family: sans-serif;
+        z-index: 1500;
+        display: none;
+      "
+    >
+      <table
+        id="sectorTable"
+        border="1"
+        cellpadding="6"
+        cellspacing="0"
+        style="
+          border-collapse: collapse;
+          background: rgba(35, 49, 58, 0.8);
+          color: white;
+        "
+      >
+        <thead>
+          <tr>
+            <th>Sectors</th>
+            <th>Limit</th>
+            <th>Freq</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- zoonslider at the bottom of the screen styling--currently hidden with js code-->
+    <div
+      id="zoomSliderPanel"
+      style="
+        position: absolute;
+        bottom: 5px;
+        right: 3px;
+        /*background: rgba(0, 0, 0, 0.1);*/
+        padding: 8px;
+        border-radius: 16px;
+        color: white;
+        font-size: 8px;
+        font-family: sans-serif;
+        height: 5px;
+        width: 150px;
+      "
+    >
+      <label for="zoomSlider"></label>
+      <input
+        type="range"
+        id="zoomSlider"
+        min="5"
+        max="12"
+        step="0.3"
+        value="7"
+      />
+      <span id="zoomValue">7.0</span>
+    </div>
+    <input type="text" id="centerCoords" readonly />
+    <!--style="width:180px; text-align:center;-->
+
+    <script src="ne_countries_inline.js"></script>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
