@@ -53,7 +53,7 @@
       let airwaysDrawn = false;
       let airwayColor = "grey"; // map ON default
       const airwayLayers = [];
-      
+
       const sectorPolygons = {};
       const airwayPolylineMap = {};
       const freqLayer = L.layerGroup();
@@ -89,9 +89,9 @@
       let activeTextMarker = null; // current selected marker
       let pendingClearMarker = null; // captured on mousedown (pre-blur)
       const PEN_CURSOR = "pen-cursor.png";
-
+      let latlngs =[];
       //--------------convert coordinates decimal numbers
-      let latlngs = [];
+
       latlngs = rawCoords
         .map(([latDMS, lonDMS]) => [
           convertDMSToDecimal(latDMS),
@@ -3811,7 +3811,7 @@
           if (!clockwise && start < end) start += 360;
 
           const step = 2;
-          
+          const latlngs = [];
 
           for (
             let b = start;
@@ -4930,9 +4930,9 @@
         });
       });
 
-      
+      /*
             const airwayBtn = document.getElementById("airwayLabelBtn");
-/*
+
            airwayBtn.addEventListener("click", () => {
               airwayLabelsVisible = !airwayLabelsVisible;
 
@@ -4971,7 +4971,6 @@
       const centerCoords = document.getElementById("centerCoords");
       L.DomEvent.disableClickPropagation(centerCoords);
 
-  
       function formatDMS(lat, lon) {
         function toDMS(deg, latlon) {
           const abs = Math.abs(deg);
@@ -6324,7 +6323,7 @@
 
         highlightAirwaysUsedInRoute(routeSteps, airwayColorMap);
 
-        //const latlngs = [];
+        const latlngs = [];
         const drawnPoints = new Set();
 
         // compute bounds before animation
