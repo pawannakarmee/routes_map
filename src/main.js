@@ -1,3 +1,7 @@
+      document.addEventListener("DOMContentLoaded", () => {
+        document.body.style.visibility = "visible";
+      });
+
       import "./styles.css";
       
       function convertDMSToDecimal(dmsStr) {
@@ -4089,6 +4093,7 @@
               btn.style.color = anyChecked ? "#b4f59d" : "";
             }
       */
+     
       function syncToolUI() {
         const active = state.ui.activeTool;
 
@@ -6877,6 +6882,7 @@
                 */
           });
 
+
         //--------toggle map---------------------
         document
           .getElementById("toggleMapBtn")
@@ -7014,4 +7020,23 @@
 
         map.fitBounds(firBoundary.getBounds());
       }
+
+      // --- Disclaimer Logic ---
+      const overlay = document.getElementById("disclaimerOverlay");
+      const btn = document.getElementById("acceptDisclaimerBtn");
+
+      if (overlay && btn) {
+
+        // Hide if previously accepted
+        //if (localStorage.getItem("aipDisclaimerAccepted") === "true") {
+          //overlay.style.display = "none";
+        //}
+
+        btn.addEventListener("click", () => {
+          localStorage.setItem("aipDisclaimerAccepted", "true");
+          overlay.style.display = "none";
+        });
+
+      }
+
       window.filterRoutes = filterRoutes;

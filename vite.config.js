@@ -1,5 +1,7 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: "/routes_map/",
+  base: process.env.NODE_ENV === "production"
+    ? "/routes_map/"
+    : "/",
 });
