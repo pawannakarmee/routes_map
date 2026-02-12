@@ -702,6 +702,31 @@
         ],
       };
 
+      const extraColorGroups = {
+        OUT: ["ORMID", "ALPOB", "TUMAK", "GABKO", "GOMTA", "TONVO", "TARDI", "LABRI", "RETAS", "MEMTU", "KUMUN", "TOVOX"],
+
+        IN: ["ORSAR", "SIR", "PATAT", "MENSA", "PASOV", "SOLUD", "TAPRA", "MUSAP", "ITRAX", "SODEX", "BUNDU",
+          "KUPRO", "LUDID", "ASTOG", "OVONA", "NALPO", "OBNET"],
+
+        BI: ["LALDO", "RIBOT", "TANSU", "PEKEM", "MUXIT", "RIBOT", "TOSNA"],
+
+        ST: ["UKILI", "VUTEB", "PUVAL", "IMPED", "EMERU", "ROVOS", "NOBTO", "ATUDO", "LORID", "GONVI", "DATOB", "GIDOB",
+          "ELOVU", "GERUL", "UMAMI", "NOLSU", "GIDIS", "KANIP", "KUSEN"]
+      };
+
+      Object.entries(extraColorGroups).forEach(([dir, names]) => {
+        names.forEach((name) => {
+          extraColorGroups[name] = dir;
+        });
+      });
+  
+      const dirColors = {
+        IN: "#ffb9dcc4",
+        OUT: "#aaf1facc",
+        BI: "#e0d0a0",
+        ST: "#ccfdbdc7",
+      };
+
       const extraPoints = {
         ADV: ["242508.3N", "0544023.7E"],
         ALGUX: ["242247N", "0541209E"],
@@ -5870,7 +5895,7 @@
 
       // Enable drag on sectorTablePanel
       makeDraggable(document.getElementById("sectorTablePanel"));
-
+/*
       Object.entries(extraPoints).forEach(([name, [latDMS, lonDMS]]) => {
         const lat = convertDMSToDecimal(latDMS);
         const lon = convertDMSToDecimal(lonDMS);
@@ -5888,7 +5913,38 @@
 
           extraLabelMarkers.push(label);
         }
-      });
+      });*/
+
+        Object.entries(extraPoints).forEach(([name, [latDMS, lonDMS]]) => {
+          const lat = convertDMSToDecimal(latDMS);
+          const lon = convertDMSToDecimal(lonDMS);
+
+          if (lat !== null && lon !== null) {
+            const label = L.tooltip({
+              permanent: true,
+              direction: "top",
+              offset: [7, -1],
+              className: "coord-label",
+            })
+              .setLatLng([lat, lon])
+              .setContent(name)
+              .addTo(map);
+
+            const dir = extraColorGroups[name];
+            const color = dir ? dirColors[dir] : null;
+
+            if (color) {
+              requestAnimationFrame(() => {
+                const el = label.getElement();
+                if (el) el.style.color = color;
+              });
+            }
+
+            extraLabelMarkers.push(label);
+          }
+        });
+
+
 
       // set color ONCE after labels exist
       setExtraLabelColor(coordLabelColor || "white");
