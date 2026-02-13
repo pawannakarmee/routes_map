@@ -334,14 +334,16 @@
 
   /* --drawing -tools ---------------*/
   .rbl-tooltip {
-    background: rgba(55, 75, 87, 0.7);
+    background: rgba(0, 0, 0, 0.39);
     border: none;
     color: #fcd78e;
     height: 18px;
     padding: 3px 6px;
     border-radius: 8px;
     box-shadow: none;
-    font-size: 11px;
+    font-size: 12px;
+    font-family: monospace;
+    z-index: 2001;
   }
 
   .freq-marker {
@@ -362,14 +364,17 @@
 
   /*multi point measure line---*/
   .measure-tooltip {
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
+    background: rgba(0, 0, 0, 0.39);
+    border: none;
     color: yellow;
-    font-weight: bold;
+    height: 18px;
+    padding: 3px 6px;
+    border-radius: 8px;
+    box-shadow: none;
+    font-size: 12px;
     font-family: monospace;
+    z-index: 2001;
   }
-
   /* ---------------text box style-----------------*/
   .text-marker {
     pointer-events: auto;

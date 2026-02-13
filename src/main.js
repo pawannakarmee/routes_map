@@ -37,8 +37,8 @@
         ["253600N", "0561300E"],
         ["250000N", "0563500E"],
         ["240000N", "0553500E"],
-        ["224200N", "0551200E"],
-        ["225611N", "0523488E"],
+        ["223751N", "0551117E"],
+        ["225616N", "0523495E"],
         ["240300N", "0514700E"],
         ["254900N", "0530600E"],
         ["260430N", "0535730E"],
@@ -770,10 +770,10 @@
       });
 
       const dirColors = {
-        IN: "#ffb9dcc4",
-        OUT: "#aaf1facc",
-        BI: "#e0d0a0",
-        ST: "#ccfdbdc7",
+        IN: "#BF6385",
+        OUT: "#5593D9",
+        BI: "#AD9747",
+        ST: "#549E7E",
       };
 
       const extraPoints = {
@@ -4035,7 +4035,7 @@
       //--------------draw main FIR boundary------------------------
 
       let firBoundary = L.polyline(latlngs, {
-        color: "yellow",
+        color: "#AFB051", //yellow
         weight: 1.2,
         dashArray: "3 3",
       }).addTo(map);
@@ -7413,7 +7413,7 @@
               map.removeLayer(baseMapLayer);
               coordLabelColor = "#878F91";
               airwayColor = "#848787"; // pick whatever you want for map OFF
-              applyCoordLabelColor();
+              //applyCoordLabelColor();
               applyAirwayColor();
               runwayLayers.forEach((layer) =>
                 layer.setStyle({ color: "#00ADD6" }),
@@ -7422,7 +7422,7 @@
               baseMapLayer.addTo(map);
               coordLabelColor = "#627482";
               airwayColor = "#576C7D";
-              applyCoordLabelColor();
+              //applyCoordLabelColor();
               applyAirwayColor();
               runwayLayers.forEach((layer) =>
                 layer.setStyle({ color: "black" }),
