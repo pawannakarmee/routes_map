@@ -3198,7 +3198,7 @@
         "OMAA,AD-TUMAK": { CFL: "F150", XFL: "RFL" },
         "OMAA,AD-ORMID": {
           CFL: "F150",
-          XFL: "F260 or Below Crusing",
+          XFL: "F260 or Below Cruising",
           REMARKS: "Destinations: OBBI, OBBS, OBKH, OEDF and OEDR",
         },
         "NALPO-OMFJ": {

@@ -64,6 +64,13 @@
     </div>
 
     <div id="mapMenuBar" class="map-menu-bar">
+      <button
+        id="toggleRoutePanelBtn"
+        class="rp-toggle"
+        aria-label="Toggle Route Panel"
+      >
+        <span class="rp-arrow"></span>
+      </button>
       <button id="toggleMapBtn" class="map-btn">Toggle Map</button>
       <button id="resetViewBtn" class="map-btn">RTE Clear</button>
       <button id="toggleRouteTipsBtn" class="map-btn">RTE Info</button>
@@ -131,29 +138,60 @@
           <div class="sector-btn-wrapper">
             <button id="sectorHeader" class="map-btn">Sectors ▸</button>
             <div id="sectorOptions" class="sector-checkboxes">
-              <label
-                ><input type="checkbox" id="selectHighSectors" /> High</label
-              >
-              <label><input type="checkbox" id="selectLowSectors" /> Low</label>
-              <hr style="margin: 6px 0; border-color: #0a3a40" />
-              <label><input type="checkbox" value="S" /> ACCS</label>
-              <label><input type="checkbox" value="L" /> ACCL</label>
-              <label><input type="checkbox" value="B" /> ACCB</label>
-              <label><input type="checkbox" value="G" /> ACCG</label>
-              <label><input type="checkbox" value="A" /> ACCA</label>
-              <label><input type="checkbox" value="N" /> ACCN</label>
-              <label><input type="checkbox" value="M" /> ACCM</label>
-              <label><input type="checkbox" value="W" /> ACCW</label>
-              <label><input type="checkbox" value="C" /> ACCC</label>
-              <label><input type="checkbox" value="D" /> ACCD</label>
-              <label><input type="checkbox" value="H" /> ACCH</label>
-              <label><input type="checkbox" value="E" /> ACCE</label>
-              <label><input type="checkbox" value="Y" /> ACCY</label>
-              <label><input type="checkbox" value="R" /> ACCR</label>
-              <hr style="margin: 6px 0; border-color: gray" />
-              <label>
-                <input type="checkbox" id="showSectorColors" /> Show
+              <label class="high">
+                <input type="checkbox" id="selectHighSectors" /> High
               </label>
+              <label class="low">
+                <input type="checkbox" id="selectLowSectors" /> Low
+              </label>
+              <hr style="margin: 3px; border-color: #0a3a40" />
+
+              <div class="high">
+                <label><input type="checkbox" value="S" /> ACCS</label>
+                <label><input type="checkbox" value="L" /> ACCL</label>
+                <label><input type="checkbox" value="B" /> ACCB</label>
+              </div>
+              <div class="low">
+                <label><input type="checkbox" value="G" /> ACCG</label>
+                <label><input type="checkbox" value="A" /> ACCA</label>
+              </div>
+
+              <hr style="margin: 3px; border-color: #bab6b6" />
+
+              <div class="high">
+                <label><input type="checkbox" value="N" /> ACCN</label>
+                <label><input type="checkbox" value="M" /> ACCM</label>
+              </div>
+              <div class="low">
+                <label><input type="checkbox" value="W" /> ACCW</label>
+              </div>
+
+              <hr style="margin: 3px; border-color: #bab6b6" />
+
+              <div class="high">
+                <label><input type="checkbox" value="C" /> ACCC</label>
+              </div>
+              <div class="low">
+                <label><input type="checkbox" value="D" /> ACCD</label>
+                <label><input type="checkbox" value="H" /> ACCH</label>
+              </div>
+              <hr style="margin: 3px; border-color: #bab6b6" />
+
+              <div class="low">
+                <label><input type="checkbox" value="E" /> ACCE</label>
+                <label><input type="checkbox" value="Y" /> ACCY</label>
+              </div>
+
+              <hr style="margin: 3px; border-color: #bab6b6" />
+
+              <div class="low">
+                <label><input type="checkbox" value="R" /> ACCR</label>
+              </div>
+              <hr style="margin: 3pxpx; border-color: #0a3a40" />
+
+              <label
+                ><input type="checkbox" id="showSectorColors" /> Show</label
+              >
             </div>
           </div>
           <button id="toolMenu" class="map-btn">Tools</button>
@@ -161,14 +199,14 @@
       </div>
     </div>
 
-    <button
+    <!--<button
       id="toggleRoutePanelBtn"
       type="button"
       class="rp-toggle"
       aria-label="Toggle Route Panel"
     >
       <span class="rp-arrow"></span>
-    </button>
+    </button>-->
 
     <!--route filter buttons -->
     <div id="routePanel">
